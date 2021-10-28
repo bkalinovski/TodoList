@@ -1,0 +1,26 @@
+﻿@model TodoViewModel;
+@{
+    ViewData["Title"] = "Todo List";
+}
+
+<div>
+    <h2>ToDo List:</h2>
+    @using (Html.BeginForm("Index", "Todo", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.TodoItem.Id)
+        <div class="input-group">
+            @Html.TextBoxFor(model => model.TodoItem.Name, new { @class = "form-control" })
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-success">@(Model.TodoItem.Id > 0 ? "Update" : "Add")</button>
+            </div>
+        </div>                
+        @Html.ValidationSummary()
+    }
+
+    <hr />
+
+    @foreach (var todoItem in Model.List)
+    {
+        <div>@todoItem.Name</div>
+    }
+</div>
