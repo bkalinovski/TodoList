@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Todo\Todo.csproj" />
     <ProjectReference Include="..\Todo.Contract\Todo.Contract.csproj" />
+    <ProjectReference Include="..\Todo.Repository\Todo.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>

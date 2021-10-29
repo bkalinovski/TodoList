@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Todo.Contract.Models;
 
 namespace Todo.Contract
 {
     public interface ITodo
     {
-        public void Add(TodoItem item);
+        public Task AddAsync(TodoItem item);
 
-        public void Remove(int id);
+        public Task RemoveAsync(int id);
 
-        public void Remove(TodoItem item);
+        public Task RemoveAsync(TodoItem item);
 
-        public List<TodoItem> GetList();
+        public Task<List<TodoItem>> GetListAsync();
 
-        public TodoItem GetItemById(int id);
+        public Task<TodoItem> GetItemByIdAsync(int id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Todo.Contract;
 using Todo.Contract.Models;
@@ -13,14 +14,12 @@ namespace Todo.Host.Controllers
         public TodoController(ITodo todoService)
         {
             _todoService = todoService;
-            
-            //PopulateList();
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var todoList = _todoService.GetList();
+            var todoList = await _todoService.GetListAsync();
             var viewModel = new TodoViewModel()
             {
                 List = todoList.Select(t => new TodoItemModel()
@@ -35,7 +34,7 @@ namespace Todo.Host.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(TodoViewModel model)
+        public async Task<IActionResult> Index(TodoViewModel model)
         {
             if (model == null)
             {
@@ -43,7 +42,7 @@ namespace Todo.Host.Controllers
                 return RedirectToAction("Index");
             }
             
-            _todoService.Add(new TodoItem()
+            await _todoService.AddAsync(new TodoItem()
             {
                 Id = model.TodoItem.Id,
                 Description = model.TodoItem.Name
@@ -53,25 +52,9 @@ namespace Todo.Host.Controllers
         }
         
         [HttpDelete]
-        public void Index(int id)
+        public async Task Index(int id)
         {
-            _todoService.Remove(id);
-        }
-
-        private void PopulateList()
-        {
-            if (_todoService.GetList().Count > 0)
-            {
-                return;
-            }
-            
-            _todoService.Add(new TodoItem(1, "Item 1"));
-            
-            _todoService.Add(new TodoItem(2, "Item 2"));
-            
-            _todoService.Add(new TodoItem(3, "Item 3"));
-            
-            _todoService.Add(new TodoItem(4, "Item 4"));
+            await _todoService.RemoveAsync(id);
         }
     }
 }

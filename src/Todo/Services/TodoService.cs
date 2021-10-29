@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Todo.Contract;
 using Todo.Contract.Models;
 
@@ -14,14 +15,14 @@ namespace Todo.Services
             _list = new List<TodoItem>();
         }
 
-        public void Add(TodoItem item)
+        public async Task AddAsync(TodoItem item)
         {
             if (item.Id == 0 && _list.Count > 0)
             {
                 item.Id = _list.Max(t => t.Id) + 1;
             }
             
-            var searchedItem = GetItemById(item.Id);
+            var searchedItem = await GetItemByIdAsync(item.Id);
 
             if (searchedItem != null)
             {
@@ -31,30 +32,33 @@ namespace Todo.Services
             _list.Add(item);
         }
 
-        public void Remove(int id)
+        public async Task RemoveAsync(int id)
         {
-            var item = GetItemById(id);
+            var item = await GetItemByIdAsync(id);
 
             if (item == null)
             {
                 return;
             }
             
-            Remove(item);
+            await RemoveAsync(item);
         }
 
-        public void Remove(TodoItem item)
+        public async Task RemoveAsync(TodoItem item)
         {
+            await Task.CompletedTask;
             _list.Remove(item);
         }
 
-        public List<TodoItem> GetList()
+        public async Task<List<TodoItem>> GetListAsync()
         {
+            await Task.CompletedTask;
             return _list;
         }
 
-        public TodoItem GetItemById(int id)
+        public async Task<TodoItem> GetItemByIdAsync(int id)
         {
+            await Task.CompletedTask;
             return _list.FirstOrDefault(item => item.Id == id);
         }
     }

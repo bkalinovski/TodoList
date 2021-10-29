@@ -18,7 +18,9 @@ namespace Todo.Host
         {
             services.AddMvc();
 
-            services.AddTodoServices();
+            //services.AddTodoServices();
+
+            services.AddTodoInMemoryDbServices();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
